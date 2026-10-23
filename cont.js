@@ -5,6 +5,22 @@
   const submit = document.querySelector('#submit');
   const logout = document.querySelector('#logout');
   let signup = false;
+  const resend = document.createElement('button');
+  resend.type = 'button';
+  resend.textContent = 'Retrimite e-mailul de confirmare';
+  status.before(resend);
+  resend.onclick = async () => {
+    if (!form.elements.email.value || !form.elements.email.reportValidity()) {
+      status.textContent = 'Introdu adresa de e-mail a contului.';
+      return;
+    }
+    resend.disabled = true;
+    try {
+      const result = await window.noirBackend.resendConfirmation(form.elements.email.value);
+      status.textContent = result.ok ? 'Am solicitat un e-mail nou. Folosește cel mai recent link primit.' : result.error;
+    } catch { status.textContent = 'Retrimiterea a eșuat. Încearcă din nou.'; }
+    finally { resend.disabled = false; }
+  };
   const birthInput = form.elements.birthDate;
   const today = new Date();
   const adultDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
