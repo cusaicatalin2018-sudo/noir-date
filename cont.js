@@ -5,6 +5,19 @@
   const submit = document.querySelector('#submit');
   const logout = document.querySelector('#logout');
   let signup = false;
+  const birthInput = form.elements.birthDate;
+  const today = new Date();
+  const adultDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+  const dateValue = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  birthInput.max = dateValue(adultDate);
+  birthInput.addEventListener('input', () => {
+    birthInput.setCustomValidity('');
+    if (birthInput.value && !/^\d{4}-\d{2}-\d{2}$/.test(birthInput.value)) {
+      birthInput.setCustomValidity('Verifică anul nașterii: introdu un an din 4 cifre.');
+    } else if (birthInput.value > birthInput.max) {
+      birthInput.setCustomValidity('Verifică data nașterii. Pentru înregistrare trebuie să ai cel puțin 18 ani.');
+    }
+  });
   toggle.onclick = () => {
     signup = !signup;
     document.querySelector('#signupFields').hidden = !signup;
