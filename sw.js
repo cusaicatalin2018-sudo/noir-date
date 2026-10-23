@@ -1,4 +1,4 @@
-const CACHE_NAME = 'noir-shell-v1';
+const CACHE_NAME = 'noir-shell-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -29,6 +29,10 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  if (url.pathname.endsWith('/backend-config.js')) {
+    event.respondWith(fetch(request, { cache: 'no-store' }).catch(() => caches.match(request)));
+    return;
+  }
 
   event.respondWith(
     caches.match(request).then(cached => cached || fetch(request).then(response => {
