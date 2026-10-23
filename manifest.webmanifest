@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Noir — întâlniri fără scenariu",
+  "short_name": "Noir",
+  "description": "Întâlniri deschise, oameni reali și seri memorabile.",
+  "lang": "ro-RO",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f7f5f1",
+  "theme_color": "#f7f5f1",
+  "categories": ["social", "lifestyle"],
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
+
