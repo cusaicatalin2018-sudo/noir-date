@@ -66,10 +66,24 @@
       const user = await this.currentUser();
       if (!user) return { ok: false, error: 'Conectează-te pentru a vedea conversațiile.' };
       const { data, error } = await client.from('conversation_members')
-        .select('conversation_id, conversations(id, created_at), profiles!conversation_members_user_id_fkey(id, display_name)')
+        .select('conversation_id, conversations(id, created_at)')
         .eq('user_id', user.id)
         .order('joined_at', { ascending: false });
-      return error ? { ok: false, error: error.message } : { ok: true, data };
+      if (error) return { ok: false, error: error.message };
+      const ids = [...new Set((data || []).map(row => row.conversation_id))];
+      if (!ids.length) return { ok: true, data: [] };
+      const { data: members, error: membersError } = await client.from('conversation_members')
+        .select('conversation_id, user_id, profiles(id, display_name)')
+        .in('conversation_id', ids)
+        .neq('user_id', user.id);
+      if (membersError) return { ok: false, error: membersError.message };
+      return {
+        ok: true,
+        data: data.map(row => ({
+          ...row,
+          other_member: (members || []).find(member => member.conversation_id === row.conversation_id) || null
+        }))
+      };
     },
     async listMessages(conversationId, limit = 50) {
       if (!client) return unavailable();
