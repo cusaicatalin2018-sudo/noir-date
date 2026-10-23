@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5f1" />
+    <meta name="description" content="Noir — întâlniri deschise, oameni reali și seri memorabile." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Noir" />
+    <title>Noir — întâlniri fără scenariu</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#discover" aria-label="Noir, pagina principală"><span class="brand-mark">n</span><span>noir<span class="brand-dot">.</span></span></a>
+        <div class="side-section-label">MENIU</div>
+        <nav class="main-nav" aria-label="Navigare principală">
+          <button class="nav-item active" data-page="discover"><span class="nav-icon">✳</span><span>Descoperă</span></button>
+          <button class="nav-item" data-page="likes"><span class="nav-icon">♡</span><span>Aprecieri</span><span class="nav-count">8</span></button>
+          <button class="nav-item" data-page="chats"><span class="nav-icon">▤</span><span>Conversații</span><span class="nav-count warm">2</span></button>
+          <button class="nav-item" data-page="events"><span class="nav-icon">◷</span><span>Evenimente</span></button>
+        </nav>
+        <div class="sidebar-rule"></div>
+        <div class="side-section-label">SPAȚIUL TĂU</div>
+        <button class="profile-mini" id="openOwnProfile"><div class="avatar own-avatar">A</div><div class="profile-mini-copy"><b>Alex, 29</b><span>Profilul meu</span></div><span class="chevron">↗</span></button>
+        <div class="sidebar-bottom">
+          <div class="safety-card"><span class="safety-icon">✦</span><b>Conexiuni cu grijă</b><p>Limitele și consimțământul fac parte din fiecare întâlnire.</p><button id="safetyMore">Ghidul comunității <span>↗</span></button></div>
+          <button class="settings-link" id="settingsButton"><span>⚙</span> Setări și confidențialitate</button>
+          <div class="sidebar-footer"><span class="online-dot"></span> În București <span class="footer-change">Schimbă</span></div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div class="mobile-brand"><span class="brand-mark">n</span> noir<span class="brand-dot">.</span></div>
+          <div class="page-heading"><div class="eyebrow" id="pageEyebrow">VINERI, 23 OCTOMBRIE</div><h1 id="pageTitle">Oameni, nu scenarii<span>.</span></h1></div>
+          <div class="top-actions"><button class="icon-button notification-button" aria-label="Notificări" id="notifications">♧<i></i></button><button class="location-pill" id="locationButton"><span>⌖</span> București <span class="pill-chevron">⌄</span></button><button class="avatar top-avatar" id="topProfile" aria-label="Profilul meu">A</button></div>
+        </header>
+
+        <div class="public-preview-banner" role="status"><b>PREVIEW DEMO</b><span>Profilurile, aprecierile și evenimentele sunt exemple. Mesajele rămân în acest browser; conturile și chatul live nu sunt încă active.</span></div>
+
+        <section class="page-view active" id="discoverPage">
+          <div class="discover-layout">
+            <div class="card-column">
+              <div class="discover-toolbar"><div class="section-title"><span class="live-dot"></span><b>În apropiere</b><span class="muted">· 12 persoane</span></div><button class="filter-button" id="filtersButton"><span>☷</span> Filtre <span class="filter-number">2</span></button></div>
+              <div class="filter-chips"><span class="filter-chip">♡ Relații fără etichete <button aria-label="Elimină filtrul">×</button></span><span class="filter-chip">⌖ 15 km <button aria-label="Elimină filtrul">×</button></span><button class="edit-filters" id="editFilters">Editează filtrele</button></div>
+              <div class="deck-wrap">
+                <div class="deck-card back-card"></div><div class="deck-card back-card second"></div>
+                <article class="person-card" id="personCard">
+                  <img class="person-photo" id="personPhoto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1100&q=85" alt="Portretul persoanei" />
+                  <div class="photo-shade"></div><div class="card-topline"><span class="verified"><span>✓</span> Verificat</span><span class="photo-count"><span>▧</span> <b id="photoIndex">1</b> / 5</span></div>
+                  <button class="photo-next" aria-label="Următoarea fotografie" id="nextPhoto">›</button>
+                  <div class="person-info"><div class="distance">● &nbsp;1,8 km distanță</div><div class="name-line"><h2 id="personName">Mara, 27</h2><span class="online-label"><i></i> activă acum</span></div><div class="person-meta" id="personMeta">♙ &nbsp;Femeie &nbsp;·&nbsp; bisexuală</div><p class="person-bio" id="personBio">Îmi plac conversațiile care nu se grăbesc și serile care se prelungesc. Aici pentru chimie, curiozitate și oameni care știu ce vor.</p><div class="intent-row" id="personTags"><span>Întâlniri casual</span><span>Petreceri</span><span>Conexiuni autentice</span></div></div>
+                  <button class="card-info" aria-label="Mai multe informații despre profil" id="infoButton">i</button>
+                </article>
+              </div>
+              <div class="deck-actions"><button class="round-action pass-action" id="passButton" aria-label="Treci mai departe">×</button><button class="round-action rewind-action" id="rewindButton" aria-label="Anulează ultima acțiune">↶</button><button class="round-action like-action" id="likeButton" aria-label="Îți place">♡</button><button class="round-action spark-action" id="sparkButton" aria-label="Apreciere specială">✦</button></div>
+              <div class="keyboard-hint"><kbd>←</kbd> treci <span>·</span> <kbd>→</kbd> apreciezi <span>·</span> <kbd>↑</kbd> super like</div>
+            </div>
+            <aside class="right-rail">
+              <section class="rail-card tonight-card"><div class="rail-overline"><span class="tiny-star">✦</span> PLANURI PENTRU SEARA ASTA</div><div class="tonight-heading"><h3>Ieșim din<br />conversație?</h3><span class="tonight-emoji">↗</span></div><p>Oameni care caută companie bună în seara asta.</p><button class="outline-button" id="tonightButton">Vezi cine e liber <span>→</span></button><div class="mini-people"><div class="mini-avatars"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=75" alt=""><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=75" alt=""><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=75" alt=""><span>+18</span></div><span>în București acum</span></div></section>
+              <section class="rail-card event-card"><div class="event-image"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=760&q=80" alt="Petrecere cu lumini colorate"><span class="event-tag">SÂMBĂTĂ · 21:00</span><button class="bookmark-button" id="bookmarkEvent" aria-label="Salvează evenimentul">♡</button></div><div class="event-content"><div class="event-kicker">✦ &nbsp;NOIR MEETS</div><h3>After Hours</h3><p>O seară pentru oameni curioși.<br />Muzică, conversații, fără grabă.</p><div class="event-bottom"><span>⌖ &nbsp;Control Club, București</span><button id="eventDetails">Detalii <span>→</span></button></div></div></section>
+              <section class="good-vibes"><span>✦</span><p><b>Un mic reminder</b><br />O potrivire e o invitație, nu o promisiune. Ritmul îl stabiliți împreună.</p></section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page-view" id="likesPage"><div class="content-page"><div class="content-intro"><div><div class="eyebrow">INTERES RECIPROC, POATE</div><h2>Te-au remarcat<span>.</span></h2><p>Opt persoane ți-au trimis o apreciere. Vezi cu cine se leagă conversația.</p></div><div class="likes-stat"><b>08</b><span>aprecieri noi</span></div></div><div class="likes-grid" id="likesGrid"></div></div></section>
+        <section class="page-view" id="chatsPage"><div class="content-page chats-page"><aside class="chat-list-pane"><div class="eyebrow">CONEXIUNI</div><h2>Conversații<span>.</span></h2><div class="chat-tabs"><button class="selected" data-chat-tab="messages">Mesaje <span>2</span></button><button data-chat-tab="matches">Potriviri noi <span>3</span></button></div><div class="chat-search"><span>⌕</span><input id="chatSearch" type="search" placeholder="Caută o conversație" aria-label="Caută o conversație"></div><div id="chatList"></div><div class="chat-match-list" id="newMatches" hidden></div></aside><section class="chat-conversation" id="chatConversation"><div class="chat-empty" id="chatEmpty"><div class="chat-empty-icon">✉</div><h3>Conversația bună<br />începe cu un salut.</h3><p>Alege o conexiune din stânga și vezi unde duce.</p><div class="empty-decoration">✦</div></div><div class="active-chat" id="activeChat" hidden></div></section></div></section>
+        <section class="page-view" id="eventsPage"><div class="content-page"><div class="content-intro"><div><div class="eyebrow">IEȘIM ÎN LUME</div><h2>Seri cu potențial<span>.</span></h2><p>Evenimente create pentru oameni deschiși, într-un spațiu atent și respectuos.</p></div><button class="dark-button" id="createEvent">＋ Propune un eveniment</button></div><div class="event-grid" id="eventGrid"></div><div class="event-note">✦ &nbsp;Participarea este pentru adulți 18+. Organizatorii stabilesc regulile fiecărui eveniment, iar consimțământul rămâne esențial.</div></div></section>
+      </main>
+
+      <nav class="mobile-nav" aria-label="Navigare mobilă"><button class="active" data-page="discover"><span>✳</span><small>Descoperă</small></button><button data-page="likes"><span>♡</span><small>Aprecieri</small><i></i></button><button data-page="chats"><span>▤</span><small>Chat</small></button><button data-page="events"><span>◷</span><small>Evenimente</small></button></nav>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+    <div class="modal-backdrop" id="modalBackdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Închide">×</button><div class="modal-icon" id="modalIcon">✦</div><div class="eyebrow" id="modalEyebrow">NOIR · COMUNITATE</div><h2 id="modalTitle">Titlu modal</h2><div class="modal-copy" id="modalCopy"></div><div class="modal-actions" id="modalActions"></div></section></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="backend-config.js"></script>
+    <script src="backend.js"></script>
+    <script src="app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+      }
+    </script>
+  </body>
+</html>
+
