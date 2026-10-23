@@ -26,7 +26,10 @@
       const { data, error } = await client.auth.signUp({
         email,
         password,
-        options: { data: { display_name: displayName, birth_date: birthDate } }
+        options: {
+          emailRedirectTo: new URL('cont.html', window.location.href).href.split('?')[0].split('#')[0],
+          data: { display_name: displayName, birth_date: birthDate }
+        }
       });
       return error ? { ok: false, error: error.message } : { ok: true, data };
     },
@@ -34,6 +37,14 @@
       if (!client) return unavailable();
       const { data, error } = await client.auth.signInWithPassword({ email, password });
       return error ? { ok: false, error: error.message } : { ok: true, data };
+    },
+    async resendConfirmation(email) {
+      if (!client) return unavailable();
+      const { error } = await client.auth.resend({
+        type: 'signup', email,
+        options: { emailRedirectTo: new URL('cont.html', window.location.href).href.split('?')[0].split('#')[0] }
+      });
+      return error ? { ok: false, error: error.message } : { ok: true };
     },
     async signOut() {
       if (!client) return unavailable();
