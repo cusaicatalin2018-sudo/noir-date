@@ -17,7 +17,10 @@
     get ready() { return Boolean(client); },
     async signUp({ email, password, displayName, birthDate }) {
       if (!client) return unavailable();
-      if (!birthDate || new Date(birthDate) > new Date(new Date().setFullYear(new Date().getFullYear() - 18))) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate || '') || !Number.isFinite(Date.parse(birthDate))) {
+        return { ok: false, error: 'Data nașterii nu este validă. Verifică ziua, luna și anul (4 cifre).' };
+      }
+      if (new Date(birthDate) > new Date(new Date().setFullYear(new Date().getFullYear() - 18))) {
         return { ok: false, error: 'Noir este disponibil doar persoanelor de 18 ani sau peste.' };
       }
       const { data, error } = await client.auth.signUp({
