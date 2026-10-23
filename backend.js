@@ -42,6 +42,44 @@
       const { data } = await client.auth.getUser();
       return data.user || null;
     },
+    async discoverProfiles({ limit = 20, exclude = [] } = {}) {
+      if (!client) return unavailable();
+      const user = await this.currentUser();
+      if (!user) return { ok: false, error: 'Conectează-te pentru a descoperi profiluri.' };
+      let query = client.from('profiles')
+        .select('id, display_name, birth_date, bio, city')
+        .eq('discoverable', true)
+        .neq('id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(Math.max(1, Math.min(Number(limit) || 20, 50)));
+      if (exclude.length) query = query.not('id', 'in', `(${exclude.join(',')})`);
+      const { data, error } = await query;
+      return error ? { ok: false, error: error.message } : { ok: true, data };
+    },
+    async likeProfile(profileId) {
+      if (!client) return unavailable();
+      const { data, error } = await client.rpc('like_profile', { target_user: profileId });
+      return error ? { ok: false, error: error.message } : { ok: true, data: data?.[0] || null };
+    },
+    async listConversations() {
+      if (!client) return unavailable();
+      const user = await this.currentUser();
+      if (!user) return { ok: false, error: 'Conectează-te pentru a vedea conversațiile.' };
+      const { data, error } = await client.from('conversation_members')
+        .select('conversation_id, conversations(id, created_at), profiles!conversation_members_user_id_fkey(id, display_name)')
+        .eq('user_id', user.id)
+        .order('joined_at', { ascending: false });
+      return error ? { ok: false, error: error.message } : { ok: true, data };
+    },
+    async listMessages(conversationId, limit = 50) {
+      if (!client) return unavailable();
+      const { data, error } = await client.from('messages')
+        .select('id, conversation_id, sender_id, body, created_at')
+        .eq('conversation_id', conversationId)
+        .order('created_at', { ascending: true })
+        .limit(Math.max(1, Math.min(Number(limit) || 50, 100)));
+      return error ? { ok: false, error: error.message } : { ok: true, data };
+    },
     async sendMessage(conversationId, body) {
       if (!client) return unavailable();
       const user = await this.currentUser();
